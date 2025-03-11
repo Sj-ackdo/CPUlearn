@@ -6,6 +6,14 @@ import struct
 # Window
 bgColor = "#C3C3C3"
 
+# create input file
+try:
+    with open(os.path.join(sys.path[0], "input.bin"), "w") as ifile:
+        pass
+except PermissionError:
+    print("Can't access file")
+
+
 root = Tk()
 root.geometry("400x400")
 root.title("CPU")
@@ -17,46 +25,46 @@ root.iconbitmap(os.path.join(sys.path[0], os.path.join("images", "Icon.ico")))
 def main():
     pass
 
-# create input file
-try:
-    with open(os.path.join(sys.path[0], "input.bin"), "w") as ifile:
-        pass
-except PermissionError:
-    print("Can't access file")
+def switch(num):
+    if entries[num].config == 0:
+        entries[num].text == 1
+    else: entries[num].text = 0
+
+
+
+
+
+
+
+
+
+
 
 # GUI stuff
 importButton = Button(root, text="File import", bg=bgColor, justify="center")
 importButton.grid(row=0, column=0)
 
-inputLabel = Label(root, text="Input", bg=bgColor, justify="center")
+inputLabel = Label(root, text="Instruction", bg=bgColor, justify="center")
 inputLabel.grid(row=1, column=0)
 
 inputrow = 1
 inputcollumn = 1
+entrytext = StringVar(root)
+entrytext.set(0)
 
-input1Entry = Button(root, width=2, justify="center")
-input1Entry.grid(row=inputrow, column=inputcollumn)
+entries = [
+    Button(root, command=lambda:switch(0), width=2, textvariable=entrytext, justify="center"),
+    Button(root, command=lambda:switch(1), width=2, textvariable=entrytext, justify="center"),
+    Button(root, command=lambda:switch(2), width=2, textvariable=entrytext, justify="center"),
+    Button(root, command=lambda:switch(3), width=2, textvariable=entrytext, justify="center"),
+    Button(root, command=lambda:switch(4), width=2, textvariable=entrytext, justify="center"),
+    Button(root, command=lambda:switch(5), width=2, textvariable=entrytext, justify="center"),
+    Button(root, command=lambda:switch(6), width=2, textvariable=entrytext, justify="center"),
+    Button(root, command=lambda:switch(7), width=2, textvariable=entrytext, justify="center")
+]
 
-input2Entry = Button(root, width=2, justify="center")
-input2Entry.grid(row=inputrow, column=inputcollumn+1)
-
-input3Entry = Button(root, width=2, justify="center")
-input3Entry.grid(row=inputrow, column=inputcollumn+2)
-
-input4Entry = Button(root, width=2, justify="center")
-input4Entry.grid(row=inputrow, column=inputcollumn+3)
-
-input5Entry = Button(root, width=2, justify="center")
-input5Entry.grid(row=inputrow, column=inputcollumn+4)
-
-input6Entry = Button(root, width=2, justify="center")
-input6Entry.grid(row=inputrow, column=inputcollumn+5)
-
-input7Entry = Button(root, width=2, justify="center")
-input7Entry.grid(row=inputrow, column=inputcollumn+6)
-
-input8Entry = Button(root, width=2, justify="center")
-input8Entry.grid(row=inputrow, column=inputcollumn+7)
+for i in range(0, 8):
+    entries[i].grid(row=inputrow, column=(inputcollumn+i))
 
 # Hou onderaan
 root.mainloop()
