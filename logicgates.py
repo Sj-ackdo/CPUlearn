@@ -14,5 +14,4 @@ def AND():
     elif(rx and ry == 1):
         return 1
     
-def main():
-    print(int(AND()))
+print(AND())
