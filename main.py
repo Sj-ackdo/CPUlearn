@@ -26,9 +26,10 @@ def main():
     pass
 
 def switch(num):
-    if entries[num].config == 0:
-        entries[num].text == 1
-    else: entries[num].text = 0
+
+    if entries[num].config("text")[-1] == "0":
+        entries[num].config(text = "1")
+    else: entries[num].config(text = "0")
 
 
 
@@ -49,18 +50,16 @@ inputLabel.grid(row=1, column=0)
 
 inputrow = 1
 inputcollumn = 1
-entrytext = StringVar(root)
-entrytext.set(0)
 
 entries = [
-    Button(root, command=lambda:switch(0), width=2, textvariable=entrytext, justify="center"),
-    Button(root, command=lambda:switch(1), width=2, textvariable=entrytext, justify="center"),
-    Button(root, command=lambda:switch(2), width=2, textvariable=entrytext, justify="center"),
-    Button(root, command=lambda:switch(3), width=2, textvariable=entrytext, justify="center"),
-    Button(root, command=lambda:switch(4), width=2, textvariable=entrytext, justify="center"),
-    Button(root, command=lambda:switch(5), width=2, textvariable=entrytext, justify="center"),
-    Button(root, command=lambda:switch(6), width=2, textvariable=entrytext, justify="center"),
-    Button(root, command=lambda:switch(7), width=2, textvariable=entrytext, justify="center")
+    Button(root, command=lambda:switch(0), width=2, text=0, justify="center"),
+    Button(root, command=lambda:switch(1), width=2, text=0, justify="center"),
+    Button(root, command=lambda:switch(2), width=2, text=0, justify="center"),
+    Button(root, command=lambda:switch(3), width=2, text=0, justify="center"),
+    Button(root, command=lambda:switch(4), width=2, text=0, justify="center"),
+    Button(root, command=lambda:switch(5), width=2, text=0, justify="center"),
+    Button(root, command=lambda:switch(6), width=2, text=0, justify="center"),
+    Button(root, command=lambda:switch(7), width=2, text=0, justify="center")
 ]
 
 for i in range(0, 8):
