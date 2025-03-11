@@ -18,8 +18,7 @@ def NAND():
     if(rx and ry == 1):
         return 0
     else:
-        return 1
-    
+        return 1  
     
 def OR():
     if(rx and ry == 0):
