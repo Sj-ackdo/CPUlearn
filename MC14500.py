@@ -4,6 +4,7 @@
 #     }
 #     return av_ins.get(instruction, "not in instructionset")
 instruction = int(0o1)
+global register
 register = int()
 Xin = int(1)
 Yin = int()
@@ -16,8 +17,14 @@ def instructionset(instruction):
         case 0o1:
             register = Xin
         case 0o10:
-            register = Xin
-            print(register)
-            print(Xin) 
+            if(Xin == 1):
+                register == 0
+            elif(Xin == 0):
+                register == 1
+        case 0o11:
+            register = register * Xin
     
-instructionset(0o10)  
+instructionset(0o1)
+instructionset(0o11)  
+print(register)
+print(Xin)
