@@ -24,7 +24,10 @@ def instructionset(instruction):
     global NOPF
     if instruction == "0000": # do nothing
         register = register
-        NOPO = 1
+        if NOPO == 0:
+            NOPO = 1
+        elif NOPO == 1:
+            NOPO = 0
     elif instruction == "0001": # Load in RR
         register = Xin
     elif instruction == "0010": # Store Complement (not)
@@ -82,7 +85,10 @@ def instructionset(instruction):
         SKP = 1
     elif instruction == "1111": # flag f
         register = register
-        NOPF = 1    
+        if NOPF == 0:
+            NOPF = 1
+        elif NOPF == 1:
+            NOPF = 0    
 
 def resetCount():
     global register, Xin, Yin, IEN, OEN, JMP, RTN, SKP, NOPO, NOPF
