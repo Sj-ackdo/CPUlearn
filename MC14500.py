@@ -1,23 +1,137 @@
-# def instructionset(instruction):
-#     av_ins = {
-#         "0000": ""
-#     }
-#     return av_ins.get(instruction, "not in instructionset")
-instruction = int(0o1)
-register = int()
-Xin = int(1)
-Yin = int()
+import os
 
-
+instruction = str()
+register = int(0)
+Xin = int(0)
+Yin = int(0)
+IEN = int(0)
+OEN = int(0)
+JMP = int(0)
+RTN = int(0)
+SKP = int(0) 
+NOPO = int(0)
+NOPF = int(0) 
 def instructionset(instruction):
-    match instruction:
-        case 0000:
-           pass
-        case 0o1:
-            register = Xin
-        case 0o10:
-            register = Xin
-            print(register)
-            print(Xin) 
-    
-instructionset(0o10)  
+    global register; int(register)
+    global Xin
+    global Yin
+    global IEN
+    global OEN
+    global JMP
+    global RTN
+    global SKP
+    global NOPO
+    global NOPF
+    if instruction == "0000": # do nothing
+        register = register
+        if NOPO == 0:
+            NOPO = 1
+        elif NOPO == 1:
+            NOPO = 0
+    elif instruction == "0001": # Load in RR
+        register = Xin
+    elif instruction == "0010": # Store Complement (not)
+        if Xin == 0:
+            register = 1
+        elif Xin == 1:
+            register = 0
+    elif instruction == "0011": # AND
+        register = Xin * register
+    elif instruction == "0100": # AND Complement
+        if Xin == 1:
+            register = 0 * register
+        elif Xin == 0:
+            register = 1 * register
+    elif instruction == "0101": # OR
+        if Xin == 1:
+            if register == 1:
+                register = 0
+            elif register == 0:
+                register = 1
+        elif Xin == 0:
+            if register == 1:
+                register = 1
+            elif register == 0:
+                register = 0
+    elif instruction == "0110": # OR Complement (NOR)
+        if Xin & register == 1:
+            register = 0
+        elif Xin & register == 0:
+            register = 1
+    elif instruction == "0111": # XNOR
+        if register == Xin:
+            register = 1
+        elif register != Xin:
+            register = 0
+    elif instruction == "1000": # Store command (Write)
+        Yin = register
+        Xin = register
+    elif instruction == "1001": # Store Complement (Write)
+        if register == 0:
+            Yin = 1
+            Xin = 1
+        elif register == 1:
+            Yin = 0 
+            Xin = 0
+    elif instruction == "1010": # Input Enable
+        IEN = 1
+    elif instruction == "1011": # Output Enable
+        OEN = 1
+    elif instruction == "1100": # JMP flag
+        JMP = 1
+    elif instruction == "1101": # Return flag
+        RTN = 1
+    elif instruction == "1110": # skip next instruct
+        SKP = 1
+    elif instruction == "1111": # flag f
+        register = register
+        if NOPF == 0:
+            NOPF = 1
+        elif NOPF == 1:
+            NOPF = 0    
+
+def resetCount():
+    global register, Xin, Yin, IEN, OEN, JMP, RTN, SKP, NOPO, NOPF
+    #Xin = 0
+    Yin = 0
+    IEN = 0
+    OEN = 0
+    JMP = 0
+    RTN = 0
+    SKP = 0
+    #NOPO = 0
+    #NOPF = 0
+
+x = str()
+os.system("cls")
+Xin = int(input())
+while x != "STOP":
+    inputs = input("Instruction: ")
+    os.system("cls")
+    if inputs == "q":
+        quit()
+    instructionset(inputs)
+    print("register value ", register)
+    print("data value ", Xin)
+    print("output value ", Yin)
+    print("output flag ", NOPO)
+    print("IEN value ", IEN)
+    print("OEN value ", OEN)
+    print("JMP value ", JMP)
+    print("RNT value ", RTN)
+    print("SKP value ", SKP)
+    print("f flag ", NOPF)
+    resetCount()
+    x = "RUN"
+
+# # DEBUG
+# print("Register:", register)
+# print("Xin:", Xin)
+
+# instructionset(0o1)
+# print("Register:", register)
+# print("Xin:", Xin)
+
+# instructionset(0o11)
+# print("Register", register)
+# print("Xin", Xin)
