@@ -110,17 +110,17 @@ while x != "STOP":
     os.system("cls")
     if inputs == "q":
         quit()
-    instructionset(inputs)
-    print("register value ", register)
-    print("data value ", Xin)
-    print("output value ", Yin)
-    print("output flag ", NOPO)
-    print("IEN value ", IEN)
-    print("OEN value ", OEN)
-    print("JMP value ", JMP)
-    print("RNT value ", RTN)
-    print("SKP value ", SKP)
-    print("f flag ", NOPF)
+    instructionset(inputs)             # Wat ik wil met de volgende value's : een tekstvak met een 1 / 0 in een vakje ernaast.
+    print("register value ", register) # verbonden aan vakje Reg. Value
+    print("data value ", Xin)          # Verbonden aan vakje Data value
+    print("output value ", Yin)        # Verbonden aan Output
+    print("o flag ", NOPO)             # verbonden aan vakje o flag
+    print("IEN value ", IEN)           # verbonden aan vakje In. Enable
+    print("OEN value ", OEN)           # verbonden aan vakje Out. Enable
+    print("JMP value ", JMP)           # verbonden aan vakje JMP flag
+    print("RNT value ", RTN)           # verbonden aan vakje RTN flag
+    print("SKP value ", SKP)           # verbonden aan vakje SKP flag
+    print("f flag ", NOPF)             # verbonden aan vakje f flag
     resetCount()
     x = "RUN"
 
