@@ -110,7 +110,7 @@ while x != "STOP":
     os.system("cls")
     if inputs == "q":
         quit()
-    instructionset(inputs)             # Wat ik wil met de volgende value's : een tekstvak met een 1 / 0 in een vakje ernaast.
+    instructionset(inputs)             # Wat ik wil met de volgende value's : een tekstvak met een 1 / 0 in een vakje ernaast.  ->> instructionset(inputs) wordt gecalled als step button
     print("register value ", register) # verbonden aan vakje Reg. Value
     print("data value ", Xin)          # Verbonden aan vakje Data value
     print("output value ", Yin)        # Verbonden aan Output
