@@ -1,7 +1,7 @@
 # Imports
 from tkinter import *
 import os, sys
-from MC14500 import instructionset
+from MC14500 import *
 
 # Window
 bgColor = "#C3C3C3"
@@ -15,7 +15,7 @@ bgColor = "#C3C3C3"
 
 
 root = Tk()
-root.geometry("400x150")
+root.geometry("400x300")
 root.title("CPU")
 root.resizable(False, False)
 root.configure(bg=bgColor)
@@ -55,16 +55,28 @@ def reset():
         entries[i].config(bg = "#FF0000")
 
 def get_bit_states():
+    global bit_states
+    global Xin
     bit_states = []
+    instr = ""
 
     for i in range(0, len(entries)):
         bit_states.append(entries[i].config("text")[-1])
+        instr = instr + entries[i].config("text")[-1]
 
-    print(bit_states)
-    print(int(bit_states[0]+bit_states[1], 2))
+    Xin = bit_states[len(bit_states)-1]
+
+    instr = instr[:-1]
+    return instr
+
 
 def clock_cycle():
-    get_bit_states()
+    instructionset(get_bit_states())
+
+    if Yin == 0:
+        outputLEDLabel.config(bg = "#FF0000")
+    elif Yin == 1:
+        outputLEDLabel.config(bg = "#00FF00")
 
 
 
@@ -110,6 +122,26 @@ resetButton.grid(row=1, column=len(entries)+6, padx=(20,0), pady=(5,0))
 
 stepButton = Button(root, command=clock_cycle, width=6, bg=bgColor, text="Step", justify="center")
 stepButton.grid(row=1, column=len(entries)+7, padx=(3,0), pady=(5,0))
+
+#     print("register value ", register) # verbonden aan vakje Reg. Value
+#     print("data value ", Xin)          # Verbonden aan vakje Data value
+#     print("output value ", Yin)        # Verbonden aan Output
+#     print("o flag ", NOPO)             # verbonden aan vakje o flag
+#     print("IEN value ", IEN)           # verbonden aan vakje In. Enable
+#     print("OEN value ", OEN)           # verbonden aan vakje Out. Enable
+#     print("JMP value ", JMP)           # verbonden aan vakje JMP flag
+#     print("RNT value ", RTN)           # verbonden aan vakje RTN flag
+#     print("SKP value ", SKP)           # verbonden aan vakje SKP flag
+#     print("f flag ", NOPF)             # verbonden aan vakje f flag
+
+registerLabel = Label(root, width=8, text="Register: ", anchor="w")
+registerLabel.grid(row=2, column=0, columnspan=4, padx=(3,0), pady=(3,0), sticky="w")
+
+dataLabel = Label(root, width=8, text="Data: ", anchor="w")
+dataLabel.grid(row=3, column=0, columnspan=4, padx=(3,0), sticky="w")
+
+oflagLabel = Label(root, width=8, text="O flag: ", anchor="w")
+oflagLabel.grid(row=4, column=0, columnspan=4, padx=(3,0), sticky="w")
 
 # Hou onderaan
 root.mainloop()
