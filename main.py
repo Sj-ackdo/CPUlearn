@@ -162,21 +162,15 @@ def get_bit_states():
 
     instr = instr[:-1]
 
-    print(instr)
-    print(Xin)
-
     return instr
 
 
 def clock_cycle():
-    global Yin, register
+    global register, Xin, Yin, NOPO, IEN, OEN, JMP, RTN, SKP, NOPF
 
     input = get_bit_states()
-    print(input)
 
     instructionset(input)
-
-    print(Yin)
 
     if Yin == 0:
         outputLEDLabel.config(bg = "#FF0000")
@@ -184,8 +178,25 @@ def clock_cycle():
         outputLEDLabel.config(bg = "#00FF00")
 
     registerLabel.config(text = "Register: " + str(register))
+    registerLabel.config(text = "Data: " + str(Xin))
+    registerLabel.config(text = "O flag: " + str(NOPO))
+    registerLabel.config(text = "F flag: " + str(NOPF))
+    registerLabel.config(text = "Input enabled: " + str(IEN))
+    registerLabel.config(text = "Output enabled: " + str(OEN))
+    registerLabel.config(text = "JMP flag: " + str(JMP))
+    registerLabel.config(text = "RTN flag: " + str(RTN))
+    registerLabel.config(text = "SKP flag: " + str(SKP))
 
-
+#     print("register value ", register) # verbonden aan vakje Reg. Value
+#     print("data value ", Xin)          # Verbonden aan vakje Data value
+#     print("output value ", Yin)        # Verbonden aan Output
+#     print("o flag ", NOPO)             # verbonden aan vakje o flag
+#     print("IEN value ", IEN)           # verbonden aan vakje In. Enable
+#     print("OEN value ", OEN)           # verbonden aan vakje Out. Enable
+#     print("JMP value ", JMP)           # verbonden aan vakje JMP flag
+#     print("RNT value ", RTN)           # verbonden aan vakje RTN flag
+#     print("SKP value ", SKP)           # verbonden aan vakje SKP flag
+#     print("f flag ", NOPF)             # verbonden aan vakje f flag
 
 
 # GUI stuff
@@ -229,17 +240,6 @@ resetButton.grid(row=1, column=len(entries)+6, padx=(20,0), pady=(5,0))
 stepButton = Button(root, command=clock_cycle, width=6, bg=bgColor, text="Step", justify="center")
 stepButton.grid(row=1, column=len(entries)+7, padx=(3,0), pady=(5,0))
 
-#     print("register value ", register) # verbonden aan vakje Reg. Value
-#     print("data value ", Xin)          # Verbonden aan vakje Data value
-#     print("output value ", Yin)        # Verbonden aan Output
-#     print("o flag ", NOPO)             # verbonden aan vakje o flag
-#     print("IEN value ", IEN)           # verbonden aan vakje In. Enable
-#     print("OEN value ", OEN)           # verbonden aan vakje Out. Enable
-#     print("JMP value ", JMP)           # verbonden aan vakje JMP flag
-#     print("RNT value ", RTN)           # verbonden aan vakje RTN flag
-#     print("SKP value ", SKP)           # verbonden aan vakje SKP flag
-#     print("f flag ", NOPF)             # verbonden aan vakje f flag
-
 registerLabel = Label(root, width=12, text="Register: ", anchor="w")
 registerLabel.grid(row=2, column=0, columnspan=4, padx=(3,0), pady=(3,0), sticky="w")
 
@@ -254,6 +254,18 @@ fflagLabel.grid(row=5, column=0, columnspan=4, padx=(3,0), sticky="w")
 
 inputLabel = Label(root, width=12, text="Input enabled: ", anchor="w")
 inputLabel.grid(row=6, column=0, columnspan=4, padx=(3,0), sticky="w")
+
+outputLabel = Label(root, width=12, text="Output enabled: ", anchor="w")
+outputLabel.grid(row=7, column=0, columnspan=4, padx=(3,0), sticky="w")
+
+jumpLabel = Label(root, width=12, text="JMP flag: ", anchor="w")
+jumpLabel.grid(row=8, column=0, columnspan=4, padx=(3,0), sticky="w")
+
+rtnLabel = Label(root, width=12, text="RTN flag: ", anchor="w")
+rtnLabel.grid(row=9, column=0, columnspan=4, padx=(3,0), sticky="w")
+
+skpLabel = Label(root, width=12, text="SKP flag: ", anchor="w")
+skpLabel.grid(row=10, column=0, columnspan=4, padx=(3,0), sticky="w")
 
 # Hou onderaan
 root.mainloop()
