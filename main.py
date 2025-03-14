@@ -1,7 +1,7 @@
 # Imports
 from tkinter import *
 import os, sys
-import struct
+# from MC14500 import Yin
 
 # Window
 bgColor = "#C3C3C3"
@@ -23,24 +23,30 @@ root.iconbitmap(os.path.join(sys.path[0], os.path.join("images", "Icon.ico")))
 
 # Functions
 def logic():
-    create_window()
+    create_top_window()
 
 def step():
     outputLEDLabel.config(bg = "#00FF00")
 
 def switch(num):
 
-    if entries[num].config("text")[-1] == "0":
-        entries[num].config(text = "1")
-        entries[num].config(bg = "#00FF00")
-    else: 
-        entries[num].config(text = "0")
-        entries[num].config(bg = "#FF0000")
+    if num < len(entries):
+        if  entries[num].config("text")[-1] == "0":
+            entries[num].config(text = "1")
+            entries[num].config(bg = "#00FF00")
+        else: 
+            entries[num].config(text = "0")
+            entries[num].config(bg = "#FF0000")
+    else:
 
-def create_window():
-    top_window = Toplevel()
-    e = Label(top_window, text="wah")
-    e.pack
+        print(num-len(entries))
+
+        if  topentries[num-len(entries)].config("text")[-1] == "0":
+            topentries[num-len(entries)].config(text = "1")
+            topentries[num-len(entries)].config(bg = "#00FF00")
+        else: 
+            topentries[num-len(entries)].config(text = "0")
+            topentries[num-len(entries)].config(bg = "#FF0000")
 
 def reset():
     # input bit buttons
@@ -51,7 +57,25 @@ def reset():
     # output led
     outputLEDLabel.config(bg = "#FF0000")
 
+def create_top_window():
 
+    top_window = Toplevel()
+    top_window.geometry("400x400")
+    top_window.title("Logic")
+    top_window.resizable(False, False)
+    top_window.configure(bg=bgColor)
+    top_window.iconbitmap(os.path.join(sys.path[0], os.path.join("images", "Icon.ico")))
+
+    toplogicButton = Button(top_window, width=2, bg=bgColor, justify="center")
+    toplogicButton.grid(row=0, column=0, padx=(3,0), pady=(3,0))
+
+    topbitCheck = Checkbutton(top_window, bg=bgColor)
+    topbitCheck.grid(row=0, column=6, padx=(3,0), pady=(3,0))
+
+    # put bit input buttons on screen
+    window_two = top_window
+    for i in range(0, len(topentries)):
+        topentries[i].grid(row=2, column=i, pady=(5,0))
 
 
 
@@ -65,7 +89,7 @@ stepButton.grid(row=1, column=0, columnspan=2, sticky="e", pady=(3,0))
 
 outputLabel = Label(root, text="Output:", bg=bgColor, justify="center")
 outputLabel.grid(row=2, column=8, pady=(5,0))
-outputLEDLabel = Label(root, width=2, bg="#FF0000", justify="center")
+outputLEDLabel = Label(root, width=2, bg="#FF0000", justify="center", borderwidth=2, relief="solid")
 outputLEDLabel.grid(row=2, column=9, pady=(5,0))
 
 logic1Button = Button(root, command=logic, width=5, text="Logic", bg=bgColor, justify="center")
@@ -97,8 +121,18 @@ entries = [
 ]
 
 # put bit input buttons on screen
-for i in range(0, 8):
+for i in range(0, len(entries)):
     entries[i].grid(row=2, column=i, pady=(5,0))
+
+window_two = None
+
+topentries = [
+    Button(window_two, command=lambda:switch(len(entries)),   width=2, text="0", bg = "#FF0000", justify="center"),
+    Button(window_two, command=lambda:switch(len(entries)+1), width=2, text="0", bg = "#FF0000", justify="center"),
+    Button(window_two, command=lambda:switch(len(entries)+2), width=2, text="0", bg = "#FF0000", justify="center"),
+    Button(window_two, command=lambda:switch(len(entries)+3), width=2, text="0", bg = "#FF0000", justify="center"),
+    Button(window_two, command=lambda:switch(len(entries)+4), width=2, text="0", bg = "#FF0000", justify="center"),
+]
 
 # Hou onderaan
 root.mainloop()
