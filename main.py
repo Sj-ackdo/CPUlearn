@@ -143,6 +143,9 @@ def reset():
         entries[i].config(text = "0")
         entries[i].config(bg = "#FF0000")
 
+    outputLEDLabel.config(bg = "#FF0000")
+    
+
 def get_bit_states():
     global bit_states
     global Xin
@@ -166,7 +169,7 @@ def get_bit_states():
 
 
 def clock_cycle():
-    global Yin
+    global Yin, register
 
     input = get_bit_states()
     print(input)
@@ -179,6 +182,8 @@ def clock_cycle():
         outputLEDLabel.config(bg = "#FF0000")
     elif Yin == 1:
         outputLEDLabel.config(bg = "#00FF00")
+
+    registerLabel.config(text = "Register: " + str(register))
 
 
 
