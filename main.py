@@ -7,6 +7,8 @@ instruction = str()
 register = int(0)
 Xin = int(0)
 Yin = int(0)
+rx = int(0)
+ry = int(0)
 IEN = int(0)
 OEN = int(0)
 JMP = int(0)
@@ -126,6 +128,16 @@ def reset():
         entries[i].config(bg = "#FF0000")
 
     outputLEDLabel.config(bg = "#FF0000")
+
+    registerLabel.config(text = "Register: 0")
+    dataLabel.config(text = "Data: 0")
+    oflagLabel.config(text = "O flag: 0")
+    fflagLabel.config(text = "F flag: 0")
+    inputLabel.config(text = "Input enabled: 0")
+    outputLabel.config(text = "Output enabled: 0")
+    jumpLabel.config(text = "JMP flag: 0")
+    rtnLabel.config(text = "RTN flag: 0")
+    skpLabel.config(text = "SKP flag: 0")
     
 
 def get_bit_states():
@@ -201,7 +213,7 @@ entriesFrame.grid(row=1, column=0, columnspan=len(entries), padx=(3,0), pady=(5,
 outputLEDLabel = Label(root, width=2, bg="#FF0000", borderwidth=2, relief="solid")
 outputLEDLabel.grid(row=1, column=len(entries)+5, padx=(7,0), pady=(5,0))
 
-resetButton = Button(root, command=lambda:reset(), width=4, text="Reset", justify="center")
+resetButton = Button(root, command=reset, width=4, text="Reset", justify="center")
 resetButton.grid(row=1, column=len(entries)+6, padx=(10,0), pady=(5,0))
 
 registerLabel = Label(root, width=14, text="Register: 0", anchor="w", bg=bgColor)
@@ -231,7 +243,7 @@ rtnLabel.grid(row=9, column=0, columnspan=4, padx=(3,0), sticky="w")
 skpLabel = Label(root, width=14, text="SKP flag: 0", anchor="w", bg=bgColor)
 skpLabel.grid(row=10, column=0, columnspan=4, padx=(3,0), sticky="w")
 
-stepButton = Button(root, command=clock_cycle(), width=6, text="Step", justify="center")
+stepButton = Button(root, command=clock_cycle, width=6, text="Step", justify="center")
 stepButton.grid(row=1, column=len(entries)+7, padx=(3,0), pady=(5,0))
 # end cpu
 #
@@ -284,20 +296,25 @@ def logicget_bit_states():
 
 
 def go_through_logic_gate():
+    global rx, ry
+
     logicget_bit_states()
-    gate = curGate.get()
+    rx = logicbit_states[0]
+    ry = logicbit_states[1]
+
+    gate = str(curGate.get())
     if gate == "AND":
-        output = AND(logicbit_states[0], logicbit_states[1])
+        output = AND()
     if gate == "NAND":
-        output = NAND(logicbit_states[0], logicbit_states[1])
+        output = NAND()
     if gate == "OR":
-        output = OR(logicbit_states[0], logicbit_states[1])
+        output = OR()
     if gate == "NOR":
-        output = NOR(logicbit_states[0], logicbit_states[1])
+        output = NOR()
     if gate == "XOR":
-        output = XOR(logicbit_states[0], logicbit_states[1])
+        output = XOR()
     if gate == "INV":
-        output = INV(logicbit_states[0], logicbit_states[1])
+        output = INV()
 
     print(output)
 
@@ -325,7 +342,7 @@ logicentriesFrame.grid(row=1, column=0, columnspan=len(logicentries), padx=(3,0)
 logicoutputLEDLabel = Label(logicroot, width=2, bg="#FF0000", borderwidth=2, relief="solid")
 logicoutputLEDLabel.grid(row=1, column=len(logicentries)+5, padx=(7,0), pady=(5,0))
 
-logicresetButton = Button(logicroot, command=lambda:logicreset(), width=4, text="Reset", justify="center")
+logicresetButton = Button(logicroot, command=logicreset, width=4, text="Reset", justify="center")
 logicresetButton.grid(row=1, column=len(logicentries)+6, padx=(10,0), pady=(5,0))
 
 logicgates = [
@@ -344,7 +361,7 @@ gateMenu = OptionMenu(logicroot, curGate, *logicgates)
 gateMenu.config(highlightbackground=bgColor, width=5, anchor="w")
 gateMenu.grid(row=2, column=0, columnspan=3, pady=(3,0))
 
-logicstepButton = Button(logicroot, command=go_through_logic_gate(), width=6, text="Step", justify="center")
+logicstepButton = Button(logicroot, command=go_through_logic_gate, width=6, text="Step", justify="center")
 logicstepButton.grid(row=1, column=len(logicentries)+7, padx=(3,0), pady=(5,0))
 
 # Hou onderaan
