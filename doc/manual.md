@@ -12,4 +12,28 @@ Clone the repo in a directory to your liking and start the program at the main.p
     cd CPULearn/
     python main.py
 ```
-Use the first 4 bits as your instruction and the right one as the data bit 
+## Usage and Explanation (Nederlands)
+![explanation](/images/explain.png)
+Hierboven volgt een uitleg over de verschillende knoppen die in de GUI staan.
+
+De gebruiker kan zelf de instructie invullen en vervolgens uitvoeren met de *Step* knop. Beschikbare instructie's zijn:</br>
+
+| 0 | 0000 | NOPO | Geen verandering RR = RR, O vlag = 1          |
+|---|------|------|-----------------------------------------------|
+| 1 | 0001 | LD   | Laad Data (Xin) -> RR                         |
+| 2 | 0010 | LDC  | Laad Inv. Data (Xin) -> RR                    |
+| 3 | 0011 | AND  | AND gate, Data (Xin) * RR -> RR               |
+| 4 | 0100 | ANDC | Inv. AND gate, Inv. Data (Xin) * RR -> RR     |
+| 5 | 0101 | OR   | OR gate, Data (Xin) + RR -> RR                |
+| 6 | 0110 | ORC  | Inv. OR gate, Inv. Data (Xin) + RR -> RR      |
+| 7 | 0111 | XNOR | Exclusive OR gate, als Data = RR, RR = 1      |
+| 8 | 1000 | STO  | Bewaar, RR -> Data (Xin) -> Output (Yin)      |
+| 9 | 1001 | STOC | Bewaar, RR -> Inv. Data (Xin) -> Output (Yin) |
+| A | 1010 | IEN  | Input enable, Inp. vlag = 1                   |
+| B | 1011 | OEN  | Output enable, Out. vlag = 1                  |
+| C | 1100 | JMP  | Jump, JMP vlag = 1                            |
+| D | 1101 | RTN  | Return, RTN vlag = 1                          |
+| E | 1110 | SKZ  | Skip, als RR = 0 skip volgende instructie     |
+| F | 1111 | NOPF | Geen verandering RR = RR, F vlag = 1          |
+
+De instructie's IEN, OEN, JMP, RTN, SKZ, NOPO & NOPF worden niet gebruikt tenzij 4-bit mode is geselecteerd (deze werkt nog niet). Daarom kunnen deze zelf worden geconfigureerd als extra vlaggen voor code executie.
