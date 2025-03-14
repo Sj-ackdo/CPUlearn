@@ -134,17 +134,20 @@ stepButton.grid(row=1, column=len(entries)+7, padx=(3,0), pady=(5,0))
 #     print("SKP value ", SKP)           # verbonden aan vakje SKP flag
 #     print("f flag ", NOPF)             # verbonden aan vakje f flag
 
-registerLabel = Label(root, width=8, text="Register: ", anchor="w")
+registerLabel = Label(root, width=12, text="Register: ", anchor="w")
 registerLabel.grid(row=2, column=0, columnspan=4, padx=(3,0), pady=(3,0), sticky="w")
 
-dataLabel = Label(root, width=8, text="Data: ", anchor="w")
+dataLabel = Label(root, width=12, text="Data: ", anchor="w")
 dataLabel.grid(row=3, column=0, columnspan=4, padx=(3,0), sticky="w")
 
-oflagLabel = Label(root, width=8, text="O flag: ", anchor="w")
+oflagLabel = Label(root, width=12, text="O flag: ", anchor="w")
 oflagLabel.grid(row=4, column=0, columnspan=4, padx=(3,0), sticky="w")
 
-fflagLabel = Label(root, width=8, text="F flag: ", anchor="w")
+fflagLabel = Label(root, width=12, text="F flag: ", anchor="w")
 fflagLabel.grid(row=5, column=0, columnspan=4, padx=(3,0), sticky="w")
+
+inputLabel = Label(root, width=12, text="Input enabled: ", anchor="w")
+inputLabel.grid(row=6, column=0, columnspan=4, padx=(3,0), sticky="w")
 
 # Hou onderaan
 root.mainloop()
