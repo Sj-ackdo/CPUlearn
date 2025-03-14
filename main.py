@@ -71,13 +71,13 @@ def get_bit_states():
 
 
 def clock_cycle():
-    instructionset(get_bit_states())
 
-    if Yin == 0:
+    result = instructionset(get_bit_states())
+
+    if result == 0:
         outputLEDLabel.config(bg = "#FF0000")
-    elif Yin == 1:
+    elif result == 1:
         outputLEDLabel.config(bg = "#00FF00")
-
 
 
 
