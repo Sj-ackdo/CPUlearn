@@ -158,7 +158,7 @@ def get_bit_states():
 
     print(bit_states)
 
-    Xin = bit_states[len(bit_states)-1]
+    Xin = int(bit_states[len(bit_states)-1])
 
     instr = instr[:-1]
 
