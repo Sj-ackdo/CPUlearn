@@ -1,18 +1,24 @@
 instruction = str()
 register = int(0)
 Xin = int(0)
-Yin = int(0)
+Yout = int(0)
 IEN = int(0)
-OEN = int(0)
+OEN = int(1)
 JMP = int(0)
 RTN = int(0)
 SKP = int(0) 
 NOPO = int(0)
 NOPF = int(0) 
+storereg = int(0)
+# RegA = int(0)
+# RegB = int(0)
+# RegC = int(0)
+# RegD = int(0)
+
 def instructionset(instruction):
-    global register; int(register)
+    global register
     global Xin
-    global Yin
+    global Yout
     global IEN
     global OEN
     global JMP
@@ -20,6 +26,7 @@ def instructionset(instruction):
     global SKP
     global NOPO
     global NOPF
+    global storereg
     if instruction == "0000": # do nothing
         register = register
         if NOPO == 0:
@@ -61,18 +68,21 @@ def instructionset(instruction):
             register = 1
         elif register != Xin:
             register = 0
-    elif instruction == "1000": # Store command (Write)
-        while OEN == 1:
-            Yin = register
+    elif instruction == "1000": # Store command (Write) ---> on store move to next register (RegA -> RegB -> RegC -> RegD) 
+        if OEN == 1:
+            Yout = register
             Xin = register
+            storereg = storereg + 0b1
     elif instruction == "1001": # Store Complement (Write)
-        while OEN == 1:    
+        if OEN == 1:    
             if register == 0:
-                Yin = 1
+                Yout = 1
                 Xin = 1
+                storereg = storereg + 0b1
             elif register == 1:
-                Yin = 0 
+                Yout = 0 
                 Xin = 0
+                storereg = storereg + 0b0
     elif instruction == "1010": # Input Enable
         if IEN == 1:
             IEN = 0
@@ -96,14 +106,15 @@ def instructionset(instruction):
         elif NOPF == 1:
             NOPF = 0    
 
-def resetCount():
-    global register, Xin, Yin, IEN, OEN, JMP, RTN, SKP, NOPO, NOPF
-    #Xin = 0
-    Yin = 0
-    IEN = 0
-    OEN = 0
-    JMP = 0
-    RTN = 0
-    SKP = 0
-    #NOPO = 0
-    #NOPF = 0
+inputs = input()
+instructionset(inputs)
+print(register)
+print(Xin)
+print(int(storereg))
+
+# / in 4-bit mode -> RR ($register) counts as carry flag
+# |-> IEN / OEN == Output / Input Enable --> Door de 1-bit bus met 4-bit input / output moet er getoggled worden tussen input en output
+# |-> SKP flag -> Skip next instruction if RR = 0
+# |-> JMP flag -> Jump to specified instruction --> not supported until scripting is supported
+# |-> RTN flag -> Skip next instruction
+# |-> NOPF / NOPO flag -> no use yet
