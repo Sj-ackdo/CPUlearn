@@ -58,5 +58,3 @@ def TRIBUF():
     if(data == 0 and control == 0):
         return 0
     
-
-print(AND())
