@@ -1,20 +1,24 @@
-import os
-
 instruction = str()
 register = int(0)
 Xin = int(0)
-Yin = int(0)
+Yout = int(0)
 IEN = int(0)
-OEN = int(0)
+OEN = int(1)
 JMP = int(0)
 RTN = int(0)
 SKP = int(0) 
 NOPO = int(0)
 NOPF = int(0) 
+storereg = int(0)
+# RegA = int(0)
+# RegB = int(0)
+# RegC = int(0)
+# RegD = int(0)
+
 def instructionset(instruction):
-    global register; int(register)
+    global register
     global Xin
-    global Yin
+    global Yout
     global IEN
     global OEN
     global JMP
@@ -22,6 +26,7 @@ def instructionset(instruction):
     global SKP
     global NOPO
     global NOPF
+    global storereg
     if instruction == "0000": # do nothing
         register = register
         if NOPO == 0:
@@ -63,20 +68,31 @@ def instructionset(instruction):
             register = 1
         elif register != Xin:
             register = 0
-    elif instruction == "1000": # Store command (Write)
-        Yin = register
-        Xin = register
+    elif instruction == "1000": # Store command (Write) ---> on store move to next register (RegA -> RegB -> RegC -> RegD) 
+        if OEN == 1:
+            Yout = register
+            Xin = register
+            storereg = storereg + 0b1
     elif instruction == "1001": # Store Complement (Write)
-        if register == 0:
-            Yin = 1
-            Xin = 1
-        elif register == 1:
-            Yin = 0 
-            Xin = 0
+        if OEN == 1:    
+            if register == 0:
+                Yout = 1
+                Xin = 1
+                storereg = storereg + 0b1
+            elif register == 1:
+                Yout = 0 
+                Xin = 0
+                storereg = storereg + 0b0
     elif instruction == "1010": # Input Enable
-        IEN = 1
+        if IEN == 1:
+            IEN = 0
+        elif IEN == 0:
+            IEN = 1
     elif instruction == "1011": # Output Enable
-        OEN = 1
+        if OEN == 1:
+            OEN = 0
+        elif OEN == 0:
+            OEN = 1
     elif instruction == "1100": # JMP flag
         JMP = 1
     elif instruction == "1101": # Return flag
@@ -88,50 +104,17 @@ def instructionset(instruction):
         if NOPF == 0:
             NOPF = 1
         elif NOPF == 1:
-            NOPF = 0
+            NOPF = 0    
 
-def resetCount():
-    global register, Xin, Yin, IEN, OEN, JMP, RTN, SKP, NOPO, NOPF
-    #Xin = 0
-    Yin = 0
-    IEN = 0
-    OEN = 0
-    JMP = 0
-    RTN = 0
-    SKP = 0
-    #NOPO = 0
-    #NOPF = 0
+inputs = input()
+instructionset(inputs)
+print(register)
+print(Xin)
+print(int(storereg))
 
-# x = str()
-# os.system("cls")
-# Xin = int(input())
-# while x != "STOP":
-#     inputs = input("Instruction: ")
-#     os.system("cls")
-#     if inputs == "q":
-#         quit()
-#     instructionset(inputs)             # Wat ik wil met de volgende value's : een tekstvak met een 1 / 0 in een vakje ernaast.  ->> instructionset(inputs) wordt gecalled als step button
-#     print("register value ", register) # verbonden aan vakje Reg. Value
-#     print("data value ", Xin)          # Verbonden aan vakje Data value
-#     print("output value ", Yin)        # Verbonden aan Output
-#     print("o flag ", NOPO)             # verbonden aan vakje o flag
-#     print("IEN value ", IEN)           # verbonden aan vakje In. Enable
-#     print("OEN value ", OEN)           # verbonden aan vakje Out. Enable
-#     print("JMP value ", JMP)           # verbonden aan vakje JMP flag
-#     print("RNT value ", RTN)           # verbonden aan vakje RTN flag
-#     print("SKP value ", SKP)           # verbonden aan vakje SKP flag
-#     print("f flag ", NOPF)             # verbonden aan vakje f flag
-#     resetCount()
-#     x = "RUN"                          # IEN / OEN niet supported tijdens 1-bit simulation
-
-# # DEBUG
-# print("Register:", register)
-# print("Xin:", Xin)
-
-# instructionset(0o1)
-# print("Register:", register)
-# print("Xin:", Xin)
-
-# instructionset(0o11)
-# print("Register", register)
-# print("Xin", Xin)
+# / in 4-bit mode -> RR ($register) counts as carry flag
+# |-> IEN / OEN == Output / Input Enable --> Door de 1-bit bus met 4-bit input / output moet er getoggled worden tussen input en output
+# |-> SKP flag -> Skip next instruction if RR = 0
+# |-> JMP flag -> Jump to specified instruction --> not supported until scripting is supported
+# |-> RTN flag -> Skip next instruction
+# |-> NOPF / NOPO flag -> no use yet
