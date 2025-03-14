@@ -1,7 +1,7 @@
 # Imports
 from tkinter import *
 import os, sys
-# from MC14500 import Yin
+from MC14500 import instructionset
 
 # Window
 bgColor = "#C3C3C3"
@@ -22,8 +22,11 @@ root.configure(bg=bgColor)
 root.iconbitmap(os.path.join(sys.path[0], os.path.join("images", "Icon.ico")))
 
 # Functions
-def main():
-    pass
+def logic():
+    create_top_window()
+
+def step():
+    outputLEDLabel.config(bg = "#00FF00")
 
 def switch(num):
 
@@ -52,9 +55,13 @@ def reset():
         entries[i].config(bg = "#FF0000")
 
 def get_bit_states():
+    bit_states = []
+
     for i in range(0, len(entries)):
         bit_states.append(entries[i].config("text")[-1])
-        print(bit_states)
+
+    print(bit_states)
+    print(int(bit_states[0]+bit_states[1], 2))
 
 def clock_cycle():
     get_bit_states()
