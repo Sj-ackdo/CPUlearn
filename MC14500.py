@@ -88,7 +88,7 @@ def instructionset(instruction):
         if NOPF == 0:
             NOPF = 1
         elif NOPF == 1:
-            NOPF = 0    
+            NOPF = 0
 
 def resetCount():
     global register, Xin, Yin, IEN, OEN, JMP, RTN, SKP, NOPO, NOPF
