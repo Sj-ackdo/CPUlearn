@@ -143,5 +143,8 @@ dataLabel.grid(row=3, column=0, columnspan=4, padx=(3,0), sticky="w")
 oflagLabel = Label(root, width=8, text="O flag: ", anchor="w")
 oflagLabel.grid(row=4, column=0, columnspan=4, padx=(3,0), sticky="w")
 
+fflagLabel = Label(root, width=8, text="F flag: ", anchor="w")
+fflagLabel.grid(row=5, column=0, columnspan=4, padx=(3,0), sticky="w")
+
 # Hou onderaan
 root.mainloop()
