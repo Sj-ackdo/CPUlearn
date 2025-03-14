@@ -1,37 +1,35 @@
-rx = 0
-ry = 0
 control = 0
 data = 0
 
-def AND():
+def AND(rx, ry):
     if(rx and ry == 0):
         return 0
     elif(rx == 0 and ry == 1):
         return 0
     elif(rx == 1 and ry == 0):
         return 0
-    elif(rx and ry == 1):
+    elif(rx == 1 and ry == 1):
         return 1
 
-def NAND():
+def NAND(rx, ry):
     if(rx and ry == 1):
         return 0
     else:
         return 1  
     
-def OR():
+def OR(rx, ry):
     if(rx and ry == 0):
         return 0
     else:
         return 1
 
-def NOR():
+def NOR(rx, ry):
     if(rx and ry == 0):
         return 1
     else:
         return 0
   
-def XOR():
+def XOR(rx, ry):
     if(rx == 0 and ry == 1):
         return 1
     if(rx == 1 and ry == 0):
@@ -39,7 +37,7 @@ def XOR():
     else:
         return 0
     
-def INV():
+def INV(rx, ry):
     if(rx or ry == 1):
         return 0
     if(rx or ry == 0):

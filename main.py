@@ -294,27 +294,67 @@ def logicget_bit_states():
     for i in range(0, len(logicentries)):
         logicbit_states.append(logicentries[i].config("text")[-1])
 
+def AND(rx, ry):
+    if(rx and ry == 0):
+        return 0
+    elif(rx == 0 and ry == 1):
+        return 0
+    elif(rx == 1 and ry == 0):
+        return 0
+    elif(rx and ry == 1):
+        return 1
+
+def NAND(rx, ry):
+    if(rx and ry == 1):
+        return 0
+    else:
+        return 1  
+    
+def OR(rx, ry):
+    if(rx and ry == 0):
+        return 0
+    else:
+        return 1
+
+def NOR(rx, ry):
+    if(rx and ry == 0):
+        return 1
+    else:
+        return 0
+  
+def XOR(rx, ry):
+    if(rx == 0 and ry == 1):
+        return 1
+    if(rx == 1 and ry == 0):
+        return 1
+    else:
+        return 0
+    
+def INV(rx, ry):
+    if(rx or ry == 1):
+        return 0
+    if(rx or ry == 0):
+        return 1
 
 def go_through_logic_gate():
-    global rx, ry
 
     logicget_bit_states()
-    rx = logicbit_states[0]
-    ry = logicbit_states[1]
+    x = logicbit_states[0]
+    y = logicbit_states[1]
 
     gate = str(curGate.get())
     if gate == "AND":
-        output = AND()
+        output = AND(x, y)
     if gate == "NAND":
-        output = NAND()
+        output = NAND(x, y)
     if gate == "OR":
-        output = OR()
+        output = OR(x, y)
     if gate == "NOR":
-        output = NOR()
+        output = NOR(x, y)
     if gate == "XOR":
-        output = XOR()
+        output = XOR(x, y)
     if gate == "INV":
-        output = INV()
+        output = INV(x, y)
 
     print(output)
 
