@@ -1,5 +1,3 @@
-import os
-
 instruction = str()
 register = int(0)
 Xin = int(0)
@@ -64,19 +62,27 @@ def instructionset(instruction):
         elif register != Xin:
             register = 0
     elif instruction == "1000": # Store command (Write)
-        Yin = register
-        Xin = register
+        while OEN == 1:
+            Yin = register
+            Xin = register
     elif instruction == "1001": # Store Complement (Write)
-        if register == 0:
-            Yin = 1
-            Xin = 1
-        elif register == 1:
-            Yin = 0 
-            Xin = 0
+        while OEN == 1:    
+            if register == 0:
+                Yin = 1
+                Xin = 1
+            elif register == 1:
+                Yin = 0 
+                Xin = 0
     elif instruction == "1010": # Input Enable
-        IEN = 1
+        if IEN == 1:
+            IEN = 0
+        elif IEN == 0:
+            IEN = 1
     elif instruction == "1011": # Output Enable
-        OEN = 1
+        if OEN == 1:
+            OEN = 0
+        elif OEN == 0:
+            OEN = 1
     elif instruction == "1100": # JMP flag
         JMP = 1
     elif instruction == "1101": # Return flag
@@ -101,37 +107,3 @@ def resetCount():
     SKP = 0
     #NOPO = 0
     #NOPF = 0
-
-x = str()
-os.system("cls")
-Xin = int(input())
-while x != "STOP":
-    inputs = input("Instruction: ")
-    os.system("cls")
-    if inputs == "q":
-        quit()
-    instructionset(inputs)             # Wat ik wil met de volgende value's : een tekstvak met een 1 / 0 in een vakje ernaast.  ->> instructionset(inputs) wordt gecalled als step button
-    print("register value ", register) # verbonden aan vakje Reg. Value
-    print("data value ", Xin)          # Verbonden aan vakje Data value
-    print("output value ", Yin)        # Verbonden aan Output
-    print("o flag ", NOPO)             # verbonden aan vakje o flag
-    print("IEN value ", IEN)           # verbonden aan vakje In. Enable
-    print("OEN value ", OEN)           # verbonden aan vakje Out. Enable
-    print("JMP value ", JMP)           # verbonden aan vakje JMP flag
-    print("RNT value ", RTN)           # verbonden aan vakje RTN flag
-    print("SKP value ", SKP)           # verbonden aan vakje SKP flag
-    print("f flag ", NOPF)             # verbonden aan vakje f flag
-    resetCount()
-    x = "RUN"                          # IEN / OEN niet supported tijdens 1-bit simulation
-
-# # DEBUG
-# print("Register:", register)
-# print("Xin:", Xin)
-
-# instructionset(0o1)
-# print("Register:", register)
-# print("Xin:", Xin)
-
-# instructionset(0o11)
-# print("Register", register)
-# print("Xin", Xin)
