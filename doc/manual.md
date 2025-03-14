@@ -13,7 +13,8 @@ Clone the repo in a directory to your liking and start the program at the main.p
     python main.py
 ```
 ## Usage and Explanation (Nederlands)
-![explanation](/images/explain.png)
+<!--![explanation](/images/explain.png)-->
+![explanation](/images/explain2.png)
 Hierboven volgt een uitleg over de verschillende knoppen die in de GUI staan.
 
 De gebruiker kan zelf de instructie invullen en vervolgens uitvoeren met de *Step* knop. Beschikbare instructie's zijn:</br>
